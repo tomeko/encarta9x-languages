@@ -19,51 +19,87 @@
 
 		.lcol {
 			margin-left: 10px;
-			margin-top: 10px;
+			margin-top: 15px;
 			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			font-size: 1.4em;
 		}
+
+		.lnk {
+			color: inherit; 
+			cursor: pointer;
+		}
+
+		.greet {
+			position: absolute;
+			display: flex;
+			z-index: 1;
+			overflow: hidden;
+			top: 40%;			
+			left: 10%;
+			font-size: 4em;
+			font-weight:800;
+			color: #d3e1d3;
+		}
+
+		.selLang {
+			border: none; 
+			outline: none; 
+			scroll-behavior: smooth; 
+			font-size: 1.8em; 
+			font-style: italic; 
+			font-family: Georgia, 'Times New Roman', Times, serif;
+		}
+
 	</style>
 </head>
 <body>
 	<div class="main">
+		<div class="greet" id="txtgreet"></div>
 	<div class="flex">
 		<div class="full">
-			<select id="selLangs" style="border: none; outline: none; scroll-behavior: smooth; font-size: 1.8em; font-style: italic; font-family: Georgia, 'Times New Roman', Times, serif;" onchange="selLangChanged(event)"></select>
+			<select id="selLangs" class="selLang" onchange="selLangChanged(event)"></select>
 		</div>
-		<div>
+		<div style="z-index: 2;">
 			<div class="lcol">
-				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Lang)"><i class="fa-solid fa-volume-high"><span id="curLang" class="lcol"></span></i></a></span>
+				<span><a class="lnk" onClick="clickPlay(PlayFunc.Lang)"><i class="fa-solid fa-volume-high"><span id="curLang" class="lcol"></span></i></a></span>
 			</div>
 			<div class="lcol">
-				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.NameIs)"><i class="fa-solid fa-volume-high"><span class="lcol">My name is&nbsp<span id="curName"></span></span></i></a></span>
+				<span><a class="lnk" onClick="clickPlay(PlayFunc.NameIs)"><i class="fa-solid fa-volume-high"><span class="lcol">My name is&nbsp<span id="curName"></span></span></i></a></span>
 			</div>
 			<div class="lcol">
-				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Thanks)"><i class="fa-solid fa-volume-high"><span class="lcol">Thanks</span></span></i></a></span>
+				<span><a class="lnk" onClick="clickPlay(PlayFunc.Thanks)"><i class="fa-solid fa-volume-high"><span class="lcol">Thanks</span></span></i></a></span>
 			</div>
 			<div class="lcol">
-				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Yes)"><i class="fa-solid fa-volume-high"><span class="lcol">Yes</span></span></i></a></span>
+				<span><a class="lnk" onClick="clickPlay(PlayFunc.Yes)"><i class="fa-solid fa-volume-high"><span class="lcol">Yes</span></span></i></a></span>
 			</div>
 			<div class="lcol">
-				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.No)"><i class="fa-solid fa-volume-high"><span class="lcol">No</span></span></i></a></span>
+				<span><a class="lnk" onClick="clickPlay(PlayFunc.No)"><i class="fa-solid fa-volume-high"><span class="lcol">No</span></span></i></a></span>
 			</div>
 			<div class="lcol">
-				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Proverb)"><i class="fa-solid fa-volume-high"><span class="lcol">Proverb</span></span></i></a></span>
+				<span><a class="lnk" onClick="clickPlay(PlayFunc.Proverb)"><i class="fa-solid fa-volume-high"><span class="lcol">Proverb</span></span></i></a></span>
 			</div>
 			<div class="lcol">
-				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Goodbye)"><i class="fa-solid fa-volume-high"><span class="lcol">Goodbye</span></span></i></a></span>
+				<span><a class="lnk" onClick="clickPlay(PlayFunc.Goodbye)"><i class="fa-solid fa-volume-high"><span class="lcol">Goodbye</span></span></i></a></span>
 			</div>
 			
 		</div>
-		<div class="full" style="margin-top: 10px; ">
+		<div class="full" style="margin-top: 10px; z-index: 2; font-size: 2em;">
 			<div id="numbers" class="three-fourth-1200 flex center"></div>
 		</div>
 	  </div>
 	</div>
+	
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 <script>
 
-const Phrases = {
+var cust_fonts = { 'Arabic' : 'Noto Serif Ethiopic' };
 
-}
+WebFont.load({
+    google: {
+		api: 'https://fonts.googleapis.com/css2',
+		families: Object.values(cust_fonts)
+    }
+});
 
 const PlayFunc = {
 	Lang: "p02.mp3",
@@ -119,10 +155,14 @@ function play_snd(clip)
 
 async function getName() 
 {
-  var lang = document.getElementById("selLangs").value;
+   var lang = document.getElementById("selLangs").value;
   fetch(`${document.URL}/assets/snd/${lang}/inf.json`)
   	.then(response => response.json())
-	.then(json => document.getElementById("curName").innerHTML = json['pname']);
+	.then(json => { 
+		document.getElementById("curName").innerHTML = json['pname'];
+		document.getElementById("txtgreet").innerHTML = json['greeting'];
+	});
+	//document.getElementById("txtgreet").style.fontFamily = cust_fonts[lang];	// testing dynamic font load
 }
 
 </script>
