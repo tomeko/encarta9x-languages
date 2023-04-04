@@ -119,7 +119,11 @@ function play_snd(clip)
 async function getName() 
 {
   var lang = document.getElementById("selLangs").value;
-  fetch(`${document.URL}/assets/snd/${lang}/inf.json`).then((data)=>{ console.log(data)});
+  fetch(`${document.URL}/assets/snd/${lang}/inf.json`).then((data)=>
+  	{ 
+		var dat = data.json();
+		document.getElementById("curName").innerHTML = dat['pname'];
+	});
 
 }
 
