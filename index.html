@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<title>encarta9x-languages</title>
+	<style>
+		.main {
+			background-image: url("assets/img/globe1.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			width: 100%;
+			height:100vh;
+		}
+
+		.lcol {
+			margin-left: 10px;
+			margin-top: 10px;
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+	<div class="flex">
+		<div class="full">
+			<select id="selLangs" style="border: none; outline: none; scroll-behavior: smooth; font-size: 1.8em; font-style: italic; font-family: Georgia, 'Times New Roman', Times, serif;" onchange="selLangChanged(event)"></select>
+		</div>
+		<div>
+			<div class="lcol">
+				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Lang)"><i class="fa-solid fa-volume-high"><span id="curLang" class="lcol"></span></i></a></span>
+			</div>
+			<div class="lcol">
+				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.NameIs)"><i class="fa-solid fa-volume-high"><span class="lcol">My name is<span id="curName"></span></span></i></a></span>
+			</div>
+			<div class="lcol">
+				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Thanks)"><i class="fa-solid fa-volume-high"><span class="lcol">Thanks</span></span></i></a></span>
+			</div>
+			<div class="lcol">
+				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Yes)"><i class="fa-solid fa-volume-high"><span class="lcol">Yes</span></span></i></a></span>
+			</div>
+			<div class="lcol">
+				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.No)"><i class="fa-solid fa-volume-high"><span class="lcol">No</span></span></i></a></span>
+			</div>
+			<div class="lcol">
+				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Proverb)"><i class="fa-solid fa-volume-high"><span class="lcol">Proverb</span></span></i></a></span>
+			</div>
+			<div class="lcol">
+				<span><a style="color: inherit; cursor: pointer;" onClick="clickPlay(PlayFunc.Goodbye)"><i class="fa-solid fa-volume-high"><span class="lcol">Goodbye</span></span></i></a></span>
+			</div>
+			
+		</div>
+		<div class="full" style="margin-top: 10px; ">
+			<div id="numbers" class="three-fourth-1200 flex center"></div>
+		</div>
+	  </div>
+	</div>
+<script>
+
+const Phrases = {
+
+}
+
+const PlayFunc = {
+	Lang: "p02.mp3",
+	NameIs: "p03.mp3",
+	Thanks: "p04.mp3",
+	Yes: "p05.mp3",
+	No: "p06.mp3",
+	Proverb: "p07.mp3",
+	Goodbye: "p08.mp3"
+}
+
+function selLangChanged(event) 
+{
+	var val = event.target.value;
+	document.getElementById("curLang").innerHTML = val;
+	getName();
+}
+
+var langs = ['Albanian', 'American', 'Amharic', 'Arabic', 'Bahasa-Indonesia', 'Bulgarian', 'Burmese', 'Canadian-French', 'Cantonese', 'Comanche', 'Croatian', 'Czech', 'Danish', 'Dutch', 'English', 'Finnish', 'French', 'German', 'Greek', 'Haida', 'Hebrew', 'Hindi', 'Hungarian', 'Irish-Gaelic', 'Italian', 'Japanese', 'Kazakh', 'Korean', 'Kurdish', 'Latvian', 'Lithuanian', 'Mandarin', 'Mongolian', 'Navajo', 'Norwegian', 'Persian', 'Pilipino', 'Polish', 'Portugese', 'Portugese-Brazilian', 'Quechua', 'Romanian', 'Russian', 'Samoan', 'Serbian', 'Spanish-Argentine', 'Spanish-Castilian', 'Spanish-Mexican', 'Swahili', 'Swedish', 'Tamil', 'Thai', 'Turkish', 'Ukranian', 'Urdu', 'Uzbek', 'Vietnamese', 'Yiddish', 'Yoruba', 'Zulu'];
+
+window.onload = function () 
+{ 
+	var options = langs.map(e=>{return `<option value="${e}" style="font-size: 0.4em; font-family: Arial, Helvetica, sans-serif; font-style: normal;">${e}</option>`});
+	document.getElementById("selLangs").innerHTML = options;
+	document.getElementById("curLang").innerHTML = langs[0];
+
+	var numsdiv = document.getElementById('numbers');
+	for (i=1; i<=10; i++)
+		numbers.innerHTML += `<span><a style="color: inherit; cursor: pointer; margin: 0px 10px 0px 10px; font-weight: bold;\" onClick=\"clickPlayNum(${i})">${i}</a></span>`;
+}
+
+function clickPlay(ptype)
+{
+	var lang = document.getElementById("selLangs").value;
+	play_snd(`assets/snd/${lang}/${ptype}`);
+}
+
+function clickPlayNum(num)
+{
+	var lang = document.getElementById("selLangs").value;
+	var fname = ("0" + num).slice(-2) + ".mp3";
+	play_snd(`assets/snd/${lang}/n${fname}`);
+}
+
+function play_snd(clip)
+{
+	var snd = document.createElement("audio");
+	snd.src = clip;
+	const cloned = snd.cloneNode();
+	cloned.play()
+}
+
+async function getName() 
+{
+  var lang = document.getElementById("selLangs").value;
+  fetch(`${window.location.origin}/assets/snd/${lang}/inf.json`).then((data)=>{ console.log(data)});
+
+}
+
+</script>
+
+</body>
+</html>
