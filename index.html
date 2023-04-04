@@ -34,9 +34,9 @@
 			display: flex;
 			z-index: 1;
 			overflow: hidden;
-			top: 40%;			
+			top: 30%;			
 			left: 10%;
-			font-size: 3em;
+			font-size: 64px;
 			font-weight:800;
 			color: #d3e1d3;
 		}
@@ -45,7 +45,7 @@
 			border: none; 
 			outline: none; 
 			scroll-behavior: smooth; 
-			font-size: 1.8em; 
+			font-size: 1.6em; 
 			font-style: italic; 
 			font-family: Georgia, 'Times New Roman', Times, serif;
 		}
@@ -89,17 +89,7 @@
 	  </div>
 	</div>
 	
-<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 <script>
-
-var cust_fonts = { 'Arabic' : 'Noto Serif Ethiopic' };
-
-WebFont.load({
-    google: {
-		api: 'https://fonts.googleapis.com/css2',
-		families: Object.values(cust_fonts)
-    }
-});
 
 const PlayFunc = {
 	Lang: "p02.mp3",
@@ -155,14 +145,14 @@ function play_snd(clip)
 
 async function getName() 
 {
-   var lang = document.getElementById("selLangs").value;
+	document.getElementById("txtgreet").innerHTML = "derperpe";
+	var lang = document.getElementById("selLangs").value;
   fetch(`${document.URL}/assets/snd/${lang}/inf.json`)
   	.then(response => response.json())
 	.then(json => { 
 		document.getElementById("curName").innerHTML = json['pname'];
 		document.getElementById("txtgreet").innerHTML = json['greeting'];
 	});
-	//document.getElementById("txtgreet").style.fontFamily = cust_fonts[lang];	// testing dynamic font load
 }
 
 </script>
