@@ -121,7 +121,7 @@ async function getName()
   var lang = document.getElementById("selLangs").value;
   fetch(`${document.URL}/assets/snd/${lang}/inf.json`)
   	.then(response => response.json())
-	.then(json => document.getElementById("curName").innerHTML = json['pname']);
+	.then(json => document.getElementById("curName").innerHTML = ' ' + json['pname']);
 }
 
 </script>
