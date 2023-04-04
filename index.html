@@ -122,6 +122,7 @@ async function getName()
   fetch(`${document.URL}/assets/snd/${lang}/inf.json`).then((data)=>
   	{ 
 		var dat = data.text().json();
+		console.log(data.text());
 		document.getElementById("curName").innerHTML = dat['pname'];
 	});
 
