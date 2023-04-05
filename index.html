@@ -136,6 +136,7 @@ window.onload = function ()
 
 function clickPlay(ptype)
 {
+	var lang = document.getElementById("selLangs").value;
 	document.getElementById("txtProverb").style.display = ptype == PlayFunc.Proverb ? "block" : "none";
 	play_snd(`assets/snd/${lang}/${ptype}`);
 }
