@@ -43,7 +43,7 @@
 
 		@media only screen and (max-width: 600px) {
 			.greet {
-				top: 70%;
+				top: 80%;
 			}
 		}
 
@@ -87,7 +87,7 @@
 			<div class="lcol">
 				<span><a class="lnk" onClick="clickPlay(PlayFunc.Proverb)"><i class="fa-solid fa-volume-high"><span class="lcol">Proverb</span></span></i></a></span>
 			</div>
-			<div id="divProverb" style="background-color: beige; padding: 10px; margin: 10px; font-size: 1em; font-family: Georgia, 'Times New Roman', Times, serif; display: none; font-style: italic;" >
+			<div id="txtProverb" style="background-color: beige; padding: 10px; margin: 10px; font-size: 1em; font-family: Georgia, 'Times New Roman', Times, serif; display: none; font-style: italic;" >
 			</div>
 			<div class="lcol">
 				<span><a class="lnk" onClick="clickPlay(PlayFunc.Goodbye)"><i class="fa-solid fa-volume-high"><span class="lcol">Goodbye</span></span></i></a></span>
@@ -136,7 +136,7 @@ window.onload = function ()
 
 function clickPlay(ptype)
 {
-	document.getElementById("txtProverb").style.display = ptype == PlayFunc.Proverb ? "inline-block" : "none";
+	document.getElementById("txtProverb").style.display = ptype == PlayFunc.Proverb ? "block" : "none";
 	play_snd(`assets/snd/${lang}/${ptype}`);
 }
 
