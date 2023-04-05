@@ -117,6 +117,7 @@ function selLangChanged(event)
 {
 	var val = event.target.value;
 	document.getElementById("curLang").innerHTML = val;
+	document.getElementById("txtProverb").style.display = "none";
 	update();
 }
 
