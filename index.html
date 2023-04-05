@@ -41,11 +41,17 @@
 			color: #d3e1d3;
 		}
 
+		@media only screen and (max-width: 600px) {
+			.greet {
+				top: 70%;
+			}
+		}
+
 		.selLang {
 			border: none; 
 			outline: none; 
 			scroll-behavior: smooth; 
-			font-size: 1.6em; 
+			font-size: 1.5em; 
 			font-style: italic; 
 			font-family: Georgia, 'Times New Roman', Times, serif;
 		}
@@ -54,12 +60,15 @@
 </head>
 <body>
 	<div class="main">
-		<div class="greet" id="txtgreet"></div>
+		<div class="greet" id="txtGreet"></div>
 	<div class="flex">
 		<div class="full">
 			<select id="selLangs" class="selLang" onchange="selLangChanged(event)"></select>
 		</div>
 		<div style="z-index: 2;">
+			<div class="lcol">
+				<span><a class="lnk" onClick="clickPlay(PlayFunc.Greeting)"><i class="fa-solid fa-volume-high"><span class="lcol">Greeting</span></span></i></a></span>
+			</div>
 			<div class="lcol">
 				<span><a class="lnk" onClick="clickPlay(PlayFunc.Lang)"><i class="fa-solid fa-volume-high"><span id="curLang" class="lcol"></span></i></a></span>
 			</div>
@@ -78,6 +87,8 @@
 			<div class="lcol">
 				<span><a class="lnk" onClick="clickPlay(PlayFunc.Proverb)"><i class="fa-solid fa-volume-high"><span class="lcol">Proverb</span></span></i></a></span>
 			</div>
+			<div id="divProverb" style="background-color: beige; padding: 10px; margin: 10px; font-size: 1em; font-family: Georgia, 'Times New Roman', Times, serif; display: none; font-style: italic;" >
+			</div>
 			<div class="lcol">
 				<span><a class="lnk" onClick="clickPlay(PlayFunc.Goodbye)"><i class="fa-solid fa-volume-high"><span class="lcol">Goodbye</span></span></i></a></span>
 			</div>
@@ -92,6 +103,7 @@
 <script>
 
 const PlayFunc = {
+	Greeting: "p01.mp3",
 	Lang: "p02.mp3",
 	NameIs: "p03.mp3",
 	Thanks: "p04.mp3",
@@ -105,7 +117,7 @@ function selLangChanged(event)
 {
 	var val = event.target.value;
 	document.getElementById("curLang").innerHTML = val;
-	getName();
+	update();
 }
 
 var langs = ['Albanian', 'American', 'Amharic', 'Arabic', 'Bahasa-Indonesia', 'Bulgarian', 'Burmese', 'Canadian-French', 'Cantonese', 'Comanche', 'Croatian', 'Czech', 'Danish', 'Dutch', 'English', 'Finnish', 'French', 'German', 'Greek', 'Haida', 'Hebrew', 'Hindi', 'Hungarian', 'Irish-Gaelic', 'Italian', 'Japanese', 'Kazakh', 'Korean', 'Kurdish', 'Latvian', 'Lithuanian', 'Mandarin', 'Mongolian', 'Navajo', 'Norwegian', 'Persian', 'Pilipino', 'Polish', 'Portugese', 'Portugese-Brazilian', 'Quechua', 'Romanian', 'Russian', 'Samoan', 'Serbian', 'Spanish-Argentine', 'Spanish-Castilian', 'Spanish-Mexican', 'Swahili', 'Swedish', 'Tamil', 'Thai', 'Turkish', 'Ukranian', 'Urdu', 'Uzbek', 'Vietnamese', 'Yiddish', 'Yoruba', 'Zulu'];
@@ -119,12 +131,12 @@ window.onload = function ()
 	var numsdiv = document.getElementById('numbers');
 	for (i=1; i<=10; i++)
 		numbers.innerHTML += `<span><a style="color: inherit; cursor: pointer; margin: 0px 10px 0px 10px; font-weight: bold;\" onClick=\"clickPlayNum(${i})">${i}</a></span>`;
-	getName();
+		update();
 }
 
 function clickPlay(ptype)
 {
-	var lang = document.getElementById("selLangs").value;
+	document.getElementById("txtProverb").style.display = ptype == PlayFunc.Proverb ? "inline-block" : "none";
 	play_snd(`assets/snd/${lang}/${ptype}`);
 }
 
@@ -143,15 +155,16 @@ function play_snd(clip)
 	cloned.play()
 }
 
-async function getName() 
+async function update() 
 {
-	document.getElementById("txtgreet").innerHTML = "derperpe";
 	var lang = document.getElementById("selLangs").value;
-  fetch(`${document.URL}/assets/snd/${lang}/inf.json`)
+  	fetch(`${document.URL}/assets/snd/${lang}/inf.json`)
   	.then(response => response.json())
 	.then(json => { 
 		document.getElementById("curName").innerHTML = json['pname'];
-		document.getElementById("txtgreet").innerHTML = json['greeting'];
+		document.getElementById("txtGreet").innerHTML = json['greeting'];
+		document.getElementById("txtProverb").innerHTML = json['proverb'];
+
 	});
 }
 
